@@ -29,12 +29,12 @@ func Connect(c *gin.Context) {
 	port, _ := strconv.Atoi(portString)
 	namespaces, err := Init(host, port)
 	if err != nil {
-		log.Print(err)
+		log.Println(err)
 		c.HTML(http.StatusInternalServerError, "index.tmpl", gin.H{
 			"message": err.Error(),
 		})
 	} else {
-		log.Print(host, port)
+		log.Printf("host: %v port: %v", host, port)
 		c.HTML(http.StatusOK, "operation.tmpl", gin.H{
 			"message":    "Connected",
 			"namespaces": namespaces,
@@ -60,9 +60,7 @@ func GetRecord(c *gin.Context) {
 			"message": "record not found",
 		})
 	} else {
-		log.Print(record.Bins)
 		bins := ConvertRecord(record.Bins)
-		log.Print(bins)
 		c.JSON(http.StatusOK, gin.H{
 			"key":    key,
 			"record": bins,
@@ -84,7 +82,7 @@ func DeleteRecord(c *gin.Context) {
 			"message": err.Error(),
 		})
 	} else if existed == true {
-		c.JSON(http.StatusNotFound, gin.H{
+		c.JSON(http.StatusOK, gin.H{
 			"message": "record deleted",
 		})
 	} else {
@@ -96,17 +94,15 @@ func DeleteRecord(c *gin.Context) {
 
 //AddRecord adds a record to aerospike
 func AddRecord(c *gin.Context) {
-	log.Print("rec:", c.PostForm("record"))
-	log.Print("key:", c.PostForm("key"))
 	var form SpikeObject
 	bindErr := c.Bind(&form)
 	if bindErr != nil {
-		log.Print("bind error", bindErr)
+		log.Println("bind error", bindErr)
 		c.JSON(http.StatusInternalServerError, gin.H{
 			"message": bindErr.Error(),
 		})
 	} else {
-		log.Print(form.Namespace, form.Set)
+		log.Printf("namespace: %v set: %v", form.Namespace, form.Set)
 		if form.Namespace == "" {
 			form.Namespace = defaultNS
 		}
@@ -115,12 +111,12 @@ func AddRecord(c *gin.Context) {
 		}
 		err := PutRec(form.Namespace, form.Set, form.Key, form.Record)
 		if err != nil {
-			log.Print("error while adding", err)
+			log.Println("error while adding", err)
 			c.JSON(http.StatusInternalServerError, gin.H{
 				"message": err.Error(),
 			})
 		} else {
-			log.Print(form.Key, form.Record)
+			log.Printf("key: %v record: %v", form.Key, form.Record)
 			c.JSON(http.StatusOK, gin.H{
 				"key":    form.Key,
 				"record": form.Record,

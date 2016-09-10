@@ -88,11 +88,12 @@ $(function() {
     	return obj;
 		}, {});
 		var key = queryParams['key']
+		var namespace = queryParams['namespace']
+		var set = queryParams['set']
 		// Submit the form using AJAX.
 		$.ajax({
 			type: 'DELETE',
-			url: action+key,
-			data: formData
+			url: action+key + '?' + $.param({'namespace': namespace, 'set' : set})
 		})
 		.done(function(response) {
 			// Make sure that the formMessages div has the 'success' class.
@@ -100,8 +101,8 @@ $(function() {
 			$(recordResponse).addClass('success');
 
 			// Set the message text.
-			response = syntaxHighlight(response.record);
-			$(recordResponse).html(response);
+			response = JSON.stringify(response);
+			$(recordResponse).text(response);
 
 			// Clear the form.
 			$('#dkey').val('');

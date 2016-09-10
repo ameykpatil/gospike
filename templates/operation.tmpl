@@ -1,0 +1,119 @@
+<html>
+<head>
+    <title>GoSpike</title>
+    <link rel="stylesheet" href="/templates/style.css">
+</head>
+<body>
+    <h1>GoSpike 
+    <span style="float:right">
+    <a href="">Basic</a> -
+    <a href="">List</a> -
+    <a href="">Map</a> -
+    <a href="">Info</a> -
+    <a href="">LList</a> -</span>
+    <hr>
+    </h1> 
+    <div class="leftpart">
+        <div id="get-rec" class="left">
+            <h1>Get From Aerospike</h1>
+            <form id="get-record" method="get" action="/record/">
+                <div class="field">
+                    <label for="namespace">Namespace</label>
+                    <select id="namespace" name="namespace">
+                        {{range .namespaces}}
+                        <option>{{.}}</option>
+                        {{end}}
+                    </select>
+                </div>
+                <div class="field">
+                    <label for="set">Set:</label>
+                    <input type="text" id="set" name="set" required />
+                </div>
+
+                <div class="field">
+                    <label for="key">Key:</label>
+                    <input type="text" id="gkey" name="key" required />
+                </div>
+
+                <div class="field">
+                    <button type="submit">Get Record</button>
+                </div>
+            </form>
+        </div>
+
+        <div id="delete-rec" class="right">
+            <h1>Delete From Aerospike</h1>
+            <form id="delete-record" method="delete" action="/record/">
+                <div class="field">
+                    <label for="namespace">Namespace</label>
+                    <select id="namespace" name="namespace">
+                        {{range .namespaces}}
+                        <option>{{.}}</option>
+                        {{end}}
+                    </select>
+                </div>
+                <div class="field">
+                    <label for="set">Set:</label>
+                    <input type="text" id="set" name="set" required />
+                </div>
+
+                <div class="field">
+                    <label for="key">Key:</label>
+                    <input type="text" id="dkey" name="key" required />
+                </div>
+
+                <div class="field">
+                    <button type="submit">Delete Record</button>
+                </div>
+            </form>
+        </div>
+
+        <div id="add-rec" class="leftfull">
+            <h1>Add To Aerospike</h1>
+            <form id="add-record" method="post" action="/record">
+                <div class="leftpart">
+                <div class="field">
+                    <label for="namespace">Namespace</label>
+                    <select id="namespace" name="namespace">
+                        {{range .namespaces}}
+                        <option>{{.}}</option>
+                        {{end}}
+                    </select>
+                </div>
+                <div class="field">
+                    <label for="set">Set:</label>
+                    <input type="text" id="set" name="set" required />
+                </div>
+
+                <div class="field">
+                    <label for="key">Key:</label>
+                    <input type="text" id="akey" name="key" required />
+                </div>
+                <div class="field">
+                    <button type="submit">Add Record</button>
+                </div>
+                </div>
+                
+                <div class="rightpart">
+                <div class="field">
+                    <label for="record">Record:</label>
+                    <textarea id="arecord" name="record" required></textarea>
+                </div>
+                </div>
+
+                
+            </form>
+        </div>
+
+    </div>
+
+    <div class="rightpart">
+        <div class="rightfull">
+            <pre><div id="record-response"></div></pre>
+        </div>
+    </div>
+
+    <script src="/templates/jquery-2.1.0.min.js"></script>
+    <script src="/templates/app.js"></script>
+</body>
+</html>

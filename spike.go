@@ -1,6 +1,7 @@
 package main
 
 import (
+	"errors"
 	"strings"
 	"time"
 
@@ -30,6 +31,9 @@ func Init(host string, port int) ([]string, error) {
 
 //GetRec returns a record for given key
 func GetRec(ns, set, key string) (*as.Record, error) {
+	if client == nil {
+		return nil, errors.New("Connect to aerospike again")
+	}
 	spikeKey, _ := as.NewKey(ns, set, key)
 	rec, err := client.Get(nil, spikeKey)
 	return rec, err
@@ -37,6 +41,9 @@ func GetRec(ns, set, key string) (*as.Record, error) {
 
 //DeleteRec returns a record for given key
 func DeleteRec(ns, set, key string) (bool, error) {
+	if client == nil {
+		return false, errors.New("Connect to aerospike again")
+	}
 	spikeKey, _ := as.NewKey(ns, set, key)
 	existed, err := client.Delete(nil, spikeKey)
 	return existed, err
@@ -44,6 +51,9 @@ func DeleteRec(ns, set, key string) (bool, error) {
 
 //PutRec returns a record for given key
 func PutRec(ns, set, key string, record as.BinMap) error {
+	if client == nil {
+		return errors.New("Connect to aerospike again")
+	}
 	spikeKey, _ := as.NewKey(ns, set, key)
 	err := client.Put(nil, spikeKey, record)
 	return err

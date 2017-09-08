@@ -56,7 +56,7 @@ $(function() {
 			$(recordResponse).html(response);
 
 			// Clear the form.
-			$('#gkey').val('');
+			// $('#gkey').val('');
 		})
 		.fail(function(data) {
 			// Make sure that the formMessages div has the 'error' class.
@@ -105,7 +105,7 @@ $(function() {
 			$(recordResponse).text(response);
 
 			// Clear the form.
-			$('#dkey').val('');
+			// $('#dkey').val('');
 		})
 		.fail(function(data) {
 			// Make sure that the formMessages div has the 'error' class.
@@ -180,8 +180,8 @@ $(function() {
 				$(recordResponse).html(response);
 
 				// Clear the form.
-				$('#akey').val('');
-				$('#arecord').val('');
+				// $('#akey').val('');
+				// $('#arecord').val('');
 			})
 			.fail(function(data) {
 				// Make sure that the formMessages div has the 'error' class.

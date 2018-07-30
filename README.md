@@ -1,5 +1,5 @@
 # gospike
-A simple ui-client to get, put, delete records from aerospike database.
+A simple ui-client to get, put & delete records from aerospike database.
 
 #### How to start :
  - Assuming you already have GO enviroment set i.e. `$GOROOT`, `$GOPATH` etc. 
